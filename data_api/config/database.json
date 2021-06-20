@@ -1,0 +1,6 @@
+{
+  "host": "localhost",
+  "db_name": "my_sagra",
+  "username": "sagra_user",
+  "password": "sagra_password"
+}

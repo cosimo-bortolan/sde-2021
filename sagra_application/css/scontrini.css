@@ -1,0 +1,10 @@
+
+/* Desktop */
+@media (min-width: 901px) {
+
+    /* Largezza group attributi */
+    #scontrini .element>.group:nth-child(2){
+        flex: 0 18rem;
+        width: 100%;
+    }
+}

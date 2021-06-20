@@ -1,0 +1,39 @@
+
+/* Allineamento per .text date */
+#serate .element>.group:nth-child(2)>.group:nth-child(1)>.group>.text{
+    justify-content: flex-start;
+    padding-left: 0.3rem;
+}
+
+/* Allineamento per .input date */
+#serate .element>.group:nth-child(2)>.group:nth-child(1)>.group>.input>input{
+    letter-spacing: -0.02rem;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+
+    /* Largezza group attributi */
+    #serate .element>.group:nth-child(2){
+        flex: 0 28rem;
+    }
+
+    /* Larghezza text e input */
+    #serate .element>.group:nth-child(2)>.group:nth-child(1)>.group>div:not(.title){
+        max-width: 11rem;
+        flex: 1;
+    }
+
+    /* Larghezza 3 group */
+    #serate .element>.group:nth-child(2)>.group:nth-child(1)>.group:nth-child(3){
+        flex: 0 3rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    /* Larghezza .text e .input per campi date*/
+    #serate .element>.group:nth-child(2)>.group:nth-child(1)>.group>div:not(.title){
+        min-width: 10rem;
+    }
+}

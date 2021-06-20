@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# # riscrivi url api
+RewriteRule order_api/.* order_api/public/index.php [L]
+RewriteRule core_api/.* core_api/public/index.php [L]
+RewriteRule auth_api/.* auth_api/public/index.php [L]
+
+</IfModule>

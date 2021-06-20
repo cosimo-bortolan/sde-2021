@@ -1,0 +1,14 @@
+{
+    "background_color": "#FFFFFF",
+    "theme_color": "#B90028",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "../img/logo_cassa.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }],
+    "name": "Cassa",
+    "short_name": "Cassa",
+    "start_url": "/sagra_application/cassa.html"
+}

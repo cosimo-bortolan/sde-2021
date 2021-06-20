@@ -1,0 +1,14 @@
+
+/* Desktop */
+@media (min-width: 901px) {
+
+    /* Largezza group attributi */
+    #stampanti .element>.group:nth-child(2){
+        flex: 0 17rem;
+    }
+    
+    /* Larghezza 2 group */
+    #stampanti .element>.group:nth-child(2)>.group:nth-child(1)>.group:nth-child(2){
+        flex: 0 5rem;
+    }
+}

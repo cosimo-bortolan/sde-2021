@@ -1,0 +1,161 @@
+.popup-container{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.popup{
+    display: none;
+    max-width: calc(100% - 2rem);
+    max-height: calc(100% - 2rem);
+    flex-direction: column;
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0px 0px 20px #000;
+}
+
+.popup>.title{
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.popup>.body{
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.popup>.footer{
+    margin-top: 0.5rem;
+}
+
+.popup .element{
+    flex: 1;
+    border-bottom: none;
+}
+
+.popup>.footer .element {
+    justify-content: space-around;
+}
+
+.popup .text{
+    flex: 1;
+    padding-left: 0.3rem;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.popup .line {
+    padding-top: 0.5rem;
+}
+
+/*----------------------------
+*   Aggiunte popup
+----------------------------*/
+
+#aggiunte-popup .element-container{
+    flex-direction: column;
+}
+
+#aggiunte-popup .element-container>.title{
+    align-items: center;
+}
+
+#aggiunte-popup .element-container>.title>.text{
+    padding-left: 0;
+}
+
+
+#aggiunte-popup .element-container>.content{
+    flex-direction: column;
+}
+
+/*----------------------------
+*   Tavolo popup, Coperti popup
+----------------------------*/
+
+#tavolo-popup .body, #coperti-popup .body{
+    flex-direction: column;
+}
+
+#tavolo-popup .body>.group, #coperti-popup .body>.group{
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#tavolo-popup .body>.group>.group, #coperti-popup .body>.group>.group{
+    flex: 1;
+}
+
+#tavolo-popup .group .text, #coperti-popup .group .text{
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    padding: 0.6rem 0 0 0;
+    text-align: center;
+}
+
+.text.tavolo-number:hover, .text.coperti-number:hover {
+    color: #B90028;
+    font-weight: 900;
+}
+
+/*----------------------------
+*   Delete popup
+----------------------------*/
+
+#delete-popup{
+    width: 17rem;
+}
+
+#delete-popup>.body>.line:nth-child(1){
+    color: red;
+    font-weight: 700;
+    justify-content: center;
+    text-align: center;
+    padding-top: 0;
+}
+
+#delete-popup>.body>.line:nth-child(2){
+    display: block;
+    justify-content: center;
+    text-align: center;
+}
+
+#delete-popup>.footer{
+    margin-top: 0.5rem;
+}
+
+/*----------------------------
+*   Scontrino popup
+----------------------------*/
+
+#layout-scontrino-popup .input{
+    flex: 0 8rem;
+}
+
+/*----------------------------
+*   Reset popup
+----------------------------*/
+
+#reset-popup{
+    width: 17rem;
+}
+
+#reset-popup>.body>.line:nth-child(1){
+    color: red;
+    font-weight: 700;
+    justify-content: center;
+    text-align: center;
+    padding-top: 0;
+}

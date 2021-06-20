@@ -1,0 +1,13 @@
+/* Margine per distanziamento simbolo € dopo input*/
+#listino .footer .element>.group:nth-child(2)>.group:nth-child(1)>.group:nth-child(3) input {
+    margin-right: 0.2rem;
+}
+
+/* Desktop */
+@media (min-width: 901px) {
+    
+    /* Largezza group attributi */
+    #listino .element>.group:nth-child(2){
+        flex: 0 24rem;
+    }
+}

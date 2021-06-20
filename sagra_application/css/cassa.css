@@ -1,0 +1,158 @@
+#navbar{
+    background-color: #B90028;
+}
+#cassa>.header{
+    flex-shrink: 0;
+    width: 100%;
+    height: 2.8rem;
+    background-color: #B90028;
+    padding: 0.4rem;
+}
+#cassa>.body{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem;
+}
+#cassa>.footer{
+    flex-shrink: 0;
+    width: 100%;
+    height: 2.8rem;
+    background-color: #B90028;
+    padding: 0.4rem;
+}
+#cassa .tab-navigation{
+    width: 100%;
+}
+#cassa .tab-navigation>.title{
+    flex: 1;
+    height: 2rem;
+    background-color: #dbdbdb;
+    padding: 0.4rem;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+#cassa .tab-navigation>.title:last-child{
+    margin-right: 0;
+}
+#cassa .tab-navigation>.title.selected{
+    background-color: #FF9B9B
+}
+#cassa .tab-container{
+    flex-direction: row;
+    width: 100%;
+    flex: 1;
+}
+#cassa .tab-container>.tab{
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    padding: 0.5rem;
+}
+#cassa .tab-container>.tab.selected{
+    display: flex;
+}
+#cassa .tab-container>.tab>.collection{
+    overflow-y: auto;
+}
+#cassa .tab-container>.tab:nth-child(4)>.collection>.totale>.text{
+    justify-content: center;
+}
+#cassa .element{
+    flex-direction: row;
+}
+#cassa .element>.group:nth-child(2) {
+    flex-direction: row;
+}
+#cassa .element>.group:nth-child(1)>.text:nth-child(1) {
+    flex: 0 2rem;
+    text-align: center;
+    font-weight: 500;
+}
+#cassa .collection>.totale{
+    width: 100%;
+    font-size: 25px;
+    font-weight: 900;
+    color: #B90028;
+    padding: 5px 10px;
+}
+#cassa .collection>.totale>.text:nth-child(1){
+    flex: 1;
+}
+#cassa .collection>.row{
+    font-weight: 500;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+#cassa .collection>.row>.group>div{
+    align-items: center;
+}
+#cassa .collection>.row>.group>div:nth-child(1){
+    margin-right: 0.5rem;
+}
+#cassa .collection>.row>.group:nth-child(1)>.input{
+    width: 4rem;
+}
+
+#cassa .collection>.row>.group:nth-child(2)>.text:nth-child(2){
+    width: 4rem;
+    justify-content: flex-end;
+}
+
+#cassa .collection>.button-container{
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+}
+#cassa .collection>.button-container>.button{
+    font-size: 25px;
+    font-weight: 900;
+    background-color: #B90028;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+/*----------------------------
+*   Footer
+----------------------------*/
+
+#cassa .footer{
+    flex-direction: row;
+    justify-content: center
+}
+
+#cassa .footer>div{
+    flex: 0 7rem;
+    color: white;
+    justify-content: center;
+}
+
+#cassa .footer>.nome{
+    flex: 0 10rem;
+    display: none;
+    align-items: center;
+}
+
+#cassa .footer .text{
+    flex: 0 0 3rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+}
+
+#cassa .footer .image{
+    padding: 0;
+    flex-shrink: 0;
+}
+
+/*----------------------------
+*   #login
+----------------------------*/
+
+#login input[type=button] {
+    background-color: #B90028;
+}

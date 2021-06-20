@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestione</title>
+        <meta charset="UTF-8">
+        <meta name="theme-color" content="#0089B5">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="img/logo_gestione.png">
+        <link rel="manifest" href="js/manifest_gestione.json">
+        <link rel="stylesheet" href="css/gestione.css" type="text/css"/>
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="css/navbar.css" type="text/css"/>
+        <link rel="stylesheet" href="css/popup.css" type="text/css"/>
+        <link rel="stylesheet" href="css/listino.css" type="text/css"/>
+        <link rel="stylesheet" href="css/serate.css" type="text/css"/>
+        <link rel="stylesheet" href="css/categorie.css" type="text/css"/>
+        <link rel="stylesheet" href="css/aggiunte.css" type="text/css"/>
+        <link rel="stylesheet" href="css/casse.css" type="text/css"/>
+        <link rel="stylesheet" href="css/scontrini.css" type="text/css"/>
+        <link rel="stylesheet" href="css/stampanti.css" type="text/css"/>
+    </head>
+    <body>
+        <div id="page">
+
+            <!-- NAVBAR -->
+            <div id="navbar">
+                <div class="title">
+                    <div class="item">
+                        <div class="image">
+                            <img src="img/menu-button.png" alt="menu">
+                        </div>
+                        <div id="menu-name" class="text">GESTIONE</div>
+                        <div id="page-name" class="text" data-bind="text: pageName"></div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="item" data-bind="click: function() { linkTo('#serate'); }">
+                        <div class="image">
+                            <img src="img/cal.png" alt="serata">
+                        </div>
+                        <div class="text">Serate</div>
+                    </div>
+                    <!-- <div class="item">
+                        <div class="image">
+                            <img src="img/ordini.png" alt="ordine">
+                        </div>
+                        <div class="text">Ordini</div>
+                    </div> -->
+                    <div class="item" data-bind="click: function() { linkTo('#listino'); }">
+                        <div class="image">
+                            <img src="img/file.png" alt="listino">
+                        </div>
+                        <div class="text">Listino</div>
+                    </div>
+                    <div class="item" data-bind="click: function() { linkTo('#categorie'); }">
+                        <div class="image">
+                            <img src="img/categorie.png" alt="categoria">
+                        </div>
+                        <div class="text">Categorie</div>
+                    </div>
+                    <div class="item" data-bind="click: function() { linkTo('#aggiunte'); }">
+                        <div class="image">
+                            <img src="img/aggiunte.png" alt="aggiunta">
+                        </div>
+                        <div class="text">Aggiunte</div>
+                    </div>
+                    <div class="item" data-bind="click: function() { linkTo('#casse'); }">
+                        <div class="image">
+                            <img src="img/cassa.png" alt="cassa">
+                        </div>
+                        <div class="text">Casse</div>
+                    </div>
+                    <div class="item" data-bind="click: function() { linkTo('#stampanti'); }">
+                        <div class="image">
+                            <img src="img/stampante.png" alt="stemapante">
+                        </div>
+                        <div class="text">Stampanti</div>
+                    </div>
+                    <div class="item" data-bind="click: function() { linkTo('#scontrini'); }">
+                        <img class="image" src="img/scontrino.png" alt="scontrino">
+                        <div class="text">Scontrini</div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="item" onclick="window.location.href='index.html'">
+                        <div class="image">
+                            <img src="img/applicazioni.png" alt="applicazioni">
+                        </div>
+                        <div class="text">Applicazioni</div>
+                    </div>
+                    <div class="item" data-bind="click: loginVM.click">
+                        <div class="image">
+                            <img src="img/utente.png" alt="utente">
+                        </div>
+                        <div class="text" data-bind="text: loginVM.buttonName()"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGIN -->
+            <div id="login" class="contents" data-bind="with: loginVM, visible: pageName() === 'Login' && !networkError() && !loading()">
+                <div class="title">Login</div>
+                <div class="body">
+                    <div class="line">
+                        <select data-bind="options: casse,
+                                optionsText: 'nome',
+                                optionsValue: 'id',
+                                value: $root.loginVM.selectedCassa">
+                        </select>
+                    </div>
+                    <div class="line">
+                        <input type="password" placeholder="password" data-bind="textInput: password">
+                    </div>
+                    <div class="line">
+                        <input type="button" value="Entra">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERATE -->
+            <div id="serate" class="contents" data-bind="with: serateVM, visible: pageName() === 'Serate' && !loading()">
+                <div class="title">Serate</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        Inizio
+                                    </div>
+                                    <div class="group">
+                                        Fine
+                                    </div>
+                                    <div class="group">
+                                        Attiva
+                                    </div>
+                                </div>
+                                <div class="group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: elements -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        <div class="title mobile-only">Inizio</div>
+                                        <div class="text" data-bind="text: textInizio"></div>
+                                        <div class="input">
+                                            <input type="datetime-local" data-bind="value: inputInizio"/>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Fine</div>
+                                        <div class="text" data-bind="text: textFine"></div>
+                                        <div class="input">
+                                            <input type="datetime-local" data-bind="value: inputFine"/>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Attiva</div>
+                                        <div class="input fixed checkbox">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" data-bind="checked: attivaCheckbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi serata</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="text mobile-only">Aggiungi serata</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group">
+                                <div class="group">
+                                    <div class="title mobile-only">Inizio</div>
+                                    <div class="input">
+                                        <input type="datetime-local" data-bind="value: inputInizio"/>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Fine</div>
+                                    <div class="input">
+                                        <input type="datetime-local" data-bind="value: inputFine"/>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Attiva</div>
+                                    <div class="input">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" data-bind="checked: attivaCheckbox"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="image" data-bind="click: () => $root.serateVM.addElement()">
+                                    <img src="img/right-arrow-2.png" alt="aggiungi">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LISTINO -->
+            <div id="listino" class="contents" data-bind="with: listinoVM, visible: pageName() === 'Listino' && !loading()">
+                <div class="title">Listino</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="image"></div>
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        Categoria
+                                    </div>
+                                    <div class="group">
+                                        Quantita
+                                    </div>
+                                    <div class="group">
+                                        Prezzo
+                                    </div>
+                                    <div class="group">
+                                        Aggiunte
+                                    </div>
+                                </div>
+                                <div class="group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: categorie -->
+                        <div class="categoria-name" data-bind="text: nome, visible: pietanze().length"></div>
+                        <!-- ko foreach: pietanze -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="image desktop-only" draggable="true">
+                                    <img src="img/ordine.png" alt="ordine">
+                                </div>
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only" draggable="true">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        <div class="title mobile-only">Categoria</div>
+                                        <div class="text" data-bind="text: $parent.nome"></div>
+                                        <div class="input">
+                                            <select class="text-center-last" data-bind="options: $root.listinoVM.categorie,
+                                                optionsText: 'nome',
+                                                optionsValue: 'id',
+                                                value: categoria">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Quantità</div>
+                                        <div class="text" data-bind="text: quantita"></div>
+                                        <div class="input">
+                                            <input type="text" data-bind="value: quantita"/>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Prezzo</div>
+                                        <div class="text" data-bind="text: prezzo()+' €'"></div>
+                                        <div class="input">
+                                            <input type="text" data-bind="value: prezzo"/>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Aggiunte</div>
+                                        <div class="image-container">
+                                            <div class="image aggiunte">
+                                                <img src="img/aggiunte_black.png" alt="aggiunte">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi pietanza</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="image desktop-only"></div>
+                            <div class="text mobile-only">Aggiungi pietanza</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group">
+                                <div class="group">
+                                    <div class="title mobile-only">Categoria</div>
+                                    <div class="input">
+                                        <select class="text-center-last" data-bind="options: $root.listinoVM.categorie,
+                                                optionsText: 'nome',
+                                                optionsValue: 'id',
+                                                value: categoria">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Quantità</div>
+                                    <div class="input">
+                                        <input type="text" data-bind="value: quantita"/>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Prezzo</div>
+                                    <div class="input">
+                                        <input type="text" data-bind="value: prezzo"/> €
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Aggiunte</div>
+                                    <div class="image-container">
+                                        <div class="image aggiunte">
+                                            <img src="img/aggiunte_black.png" alt="aggiunte">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="image" data-bind="click: () => $root.listinoVM.addElement()">
+                                    <img src="img/right-arrow-2.png" alt="aggiungi">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIE -->
+            <div id="categorie" class="contents" data-bind="with: categorieVM, visible: pageName() === 'Categorie' && !loading()">
+                <div class="title">Categorie</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="image"></div>
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        Gruppo
+                                    </div>
+                                </div>
+                                <div class="group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: elements -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="image desktop-only" draggable="true">
+                                    <img src="img/ordine.png" alt="ordine">
+                                </div>
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only" draggable="true">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        <div class="title mobile-only">Gruppo</div>
+                                        <div class="text" data-bind="text: gruppoSelect"></div>
+                                        <div class="input">
+                                            <select class="text-center-last" data-bind="options: $parent.gruppi,
+                                                value: gruppoSelect">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi categoria</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="image desktop-only"></div>
+                            <div class="text mobile-only">Aggiungi categoria</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group">
+                                <div class="group">
+                                    <div class="title mobile-only">Gruppo</div>
+                                    <div class="input">
+                                        <select class="text-center-last" data-bind="options: $parent.gruppi,
+                                                value: gruppoSelect">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="image" data-bind="click:  () => $root.categorieVM.addElement()">
+                                    <img src="img/right-arrow-2.png" alt="aggiungi">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AGGIUNTE -->
+            <div id="aggiunte" class="contents" data-bind="with: aggiunteVM, visible: pageName() === 'Aggiunte' && !loading()">
+                <div class="title">Aggiunte</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="image"></div>
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group"></div>
+                                <div class="group"></div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: elements -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="image desktop-only" draggable="true">
+                                    <img src="img/ordine.png" alt="ordine">
+                                </div>
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only" draggable="true">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group"></div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div></div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi aggiunta</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="image desktop-only"></div>
+                            <div class="text mobile-only">Aggiungi aggiunta</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group"></div>
+                            <div class="group">
+                                <div class="image" data-bind="click:  () => $root.aggiunteVM.addElement()">
+                                    <img src="img/right-arrow-2.png" alt="aggiungi">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CASSE -->
+            <div id="casse" class="contents" data-bind="with: casseVM, visible: pageName() === 'Casse' && !loading()">
+                <div class="title">Casse</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="image desktop-only">
+                                </div>
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        Asporto
+                                    </div>
+                                    <div class="group">
+                                        Stampante
+                                    </div>
+                                    <div class="group">
+                                        Permessi
+                                    </div>
+                                    <div class="group">
+                                        Password
+                                    </div>
+                                </div>
+                                <div class="group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: elements -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="image desktop-only">
+                                </div>
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        <div class="title mobile-only">Asporto</div>
+                                        <div class="input fixed checkbox">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" data-bind="checked: asportoCheckbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Stampante</div>
+                                        <div class="text" data-bind="text: stampanteNome"></div>
+                                        <div class="input">
+                                            <select class="text-center-last" data-bind="options: $parent.stampanti,
+                                                optionsCaption: 'Nessuna',
+                                                optionsText: 'nome',
+                                                optionsValue: 'id',
+                                                value: stampanteId">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Permessi</div>
+                                        <div class="text" data-bind="text: permessiSelect"></div>
+                                        <div class="input">
+                                            <select class="text-center-last" data-bind="options: $parent.permessi,
+                                                value: permessiSelect">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Password</div>
+                                        <div class="image-container">
+                                            <div class="image password">
+                                                <img src="img/modify.png" alt="modifica">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi cassa</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="image desktop-only">
+                            </div>
+                            <div class="text mobile-only">Aggiungi cassa</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group">
+                                <div class="group">
+                                    <div class="title mobile-only">Asporto</div>
+                                    <div class="input fixed checkbox">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" data-bind="checked: asportoCheckbox"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Stampante</div>
+                                    <div class="input">
+                                        <select class="text-center-last" data-bind="options: $parent.stampanti,
+                                                optionsCaption: 'Nessuna',
+                                                optionsText: 'nome',
+                                                optionsValue: 'id',
+                                                value: stampanteId">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Permessi</div>
+                                    <div class="input">
+                                        <select class="text-center-last" data-bind="options: $parent.permessi,
+                                                value: permessiSelect">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Password</div>
+                                    <div class="input">
+                                        <input type="password" data-bind="value: password"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="image" data-bind="click: () => $root.casseVM.addElement()">
+                                    <img src="img/right-arrow-2.png" alt="aggiungi">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAMPANTI -->
+            <div id="stampanti" class="contents" data-bind="with: stampantiVM, visible: pageName() === 'Stampanti' && !loading()">
+                <div class="title">Stampanti</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="image"></div>
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        IP
+                                    </div>
+                                    <div class="group">
+                                        Scontrini
+                                    </div>
+                                </div>
+                                <div class="group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: elements -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="image desktop-only">
+                                </div>
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        <div class="title mobile-only">IP</div>
+                                        <div class="text" data-bind="text: ip"></div>
+                                        <div class="input">
+                                            <input type="text" data-bind="value: ip"/>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Scontrini</div>
+                                        <div class="image-container">
+                                            <div class="image scontrini">
+                                                <img src="img/scontrino_black.png" alt="modifica">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi stampante</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="image desktop-only"></div>
+                            <div class="text mobile-only">Aggiungi stampante</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group">
+                                <div class="group">
+                                    <div class="title mobile-only">IP</div>
+                                    <div class="input">
+                                        <input type="text" data-bind="value: ip"/>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Scontrini</div>
+                                    <div class="image-container">
+                                        <div class="image scontrini">
+                                            <img src="img/scontrino_black.png" alt="modifica">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="image" data-bind="click:  () => $root.stampantiVM.addElement()">
+                                    <img src="img/right-arrow-1.png" alt="conferma">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCONTRINI -->
+            <div id="scontrini" class="contents" data-bind="with: scontriniVM, visible: pageName() === 'Scontrini' && !loading()">
+                <div class="title">Scontrini</div>
+                <div class="body">
+                    <div class="collection">
+                        <div class="element desktop-only">
+                            <div class="group">
+                                <div class="image desktop-only">
+                                </div>
+                                <div class="text">Nome</div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        Ricevuta
+                                    </div>
+                                    <div class="group">
+                                        Layout
+                                    </div>
+                                    <div class="group">
+                                        Categorie
+                                    </div>
+                                </div>
+                                <div class="group">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ko foreach: elements -->
+                        <div class="element">
+                            <div class="group">
+                                <div class="image desktop-only" draggable="true">
+                                    <img src="img/ordine.png" alt="ordine">
+                                </div>
+                                <div class="text" data-bind="text: nome"></div>
+                                <div class="input">
+                                    <input type="text" data-bind="value: nome"/>
+                                </div>
+                                <div class="image expand mobile-only" draggable="true">
+                                    <img src="img/espandi.png" alt="espandi">
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="group">
+                                    <div class="group">
+                                        <div class="title mobile-only">Ricevuta</div>
+                                        <div class="input fixed checkbox">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" data-bind="checked: ricevutaCheckbox"/>
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Layout</div>
+                                        <div class="image-container">
+                                            <div class="image layout-scontrino">
+                                                <img src="img/settings.png" alt="settings">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <div class="title mobile-only">Categorie</div>
+                                        <div class="image-container">
+                                            <div class="image categorie">
+                                                <img src="img/categorie_black.png" alt="categorie">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="image elimina">
+                                        <img src="img/annulla_red.png" alt="elimina">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="categoria-name desktop-only">Aggiungi scontrino</div>
+                    <div class="element" data-bind="with: newElement">
+                        <div class="group">
+                            <div class="image desktop-only">
+                            </div>
+                            <div class="text mobile-only">Aggiungi scontrino</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: nome"/>
+                            </div>
+                            <div class="image expand mobile-only">
+                                <img src="img/espandi.png" alt="espandi">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="group">
+                                <div class="group">
+                                    <div class="title mobile-only">Ricevuta</div>
+                                    <div class="input fixed checkbox">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" data-bind="checked: ricevutaCheckbox"/>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Layout</div>
+                                    <div class="image-container">
+                                        <div class="image layout-scontrino">
+                                            <img src="img/settings.png" alt="settings">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group">
+                                    <div class="title mobile-only">Categorie</div>
+                                    <div class="image-container">
+                                        <div class="image categorie">
+                                            <img src="img/categorie_black.png" alt="categorie">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="image" data-bind="click: () => $root.scontriniVM.addElement()">
+                                    <img src="img/right-arrow-2.png" alt="aggiungi">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOADING -->
+            <div id="loading" class="contents" data-bind="visible: loading() && !networkError()">
+                <div class="title"></div>
+                <div class="body">
+                    <div class="image">
+                        <img src="img/loading_gestione.gif" alt="caricamento">
+                    </div>
+                </div>
+            </div>
+
+            <!-- NETWORK ERROR -->
+            <div id="network" class="contents" data-bind="visible: networkError">
+                <div class="title"></div>
+                <div class="body">
+                    <div class="image">
+                        <img src="img/round-error_gestione.png" alt="errore">
+                    </div>
+                    Errore di rete
+                </div>
+            </div>
+
+            <div class="popup-container">
+
+                <!-- DELETE POPUP -->
+                <div id="delete-popup" class="popup">
+                    <div class="title">
+                        Confermi eliminazione?
+                    </div>
+                    <div class="body">
+                        <div class="line" data-bind="visible: popupAlert, text: popupAlert"></div>
+                        <div class="line" data-bind="visible: popupDetails, html: popupDetails"></div>
+                        <div class="line" data-bind="visible: popupConfirm">
+                            <input type="text" data-bind="textInput: popupInput"/>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="element">
+                            <div class="image annulla">
+                                <img src="img/annulla.png" alt="annulla">
+                            </div>
+                            <div class="image conferma">
+                                <img src="img/conferma.png" alt="conferma">
+                            </div>
+                            <div class="image wait">
+                                <img src="img/loading.gif" alt="loading">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASSWORD POPUP -->
+                <div id="password-popup" class="popup" data-bind="with: casseVM">
+                    <div class="title">
+                        Modifica password
+                    </div>
+                    <div class="body">
+                        <div class="line">
+                            <input type="password" data-bind="textInput: newPassword1" placeholder="nuova password"/>
+                        </div>
+                        <div class="line">
+                            <input type="password" data-bind="textInput: newPassword2" placeholder="conferma password"/>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="element">
+                            <div class="image annulla">
+                                <img src="img/annulla.png" alt="annulla">
+                            </div>
+                            <div class="image conferma">
+                                <img src="img/conferma.png" alt="conferma">
+                            </div>
+                            <div class="image wait">
+                                <img src="img/loading.gif" alt="loading">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AGGIUNTE POPUP -->
+                <div id="aggiunte-popup" class="popup" data-bind="with: listinoVM">
+                    <div class="title">
+                        Seleziona aggiunte diponibili
+                    </div>
+                    <div class="body" data-bind="foreach: aggiunte">
+                        <div class="element">
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: selected"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="text" data-bind="text: nome"></div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="element">
+                            <div class="image annulla">
+                                <img src="img/annulla.png" alt="annulla">
+                            </div>
+                            <div class="image conferma">
+                                <img src="img/conferma.png" alt="conferma">
+                            </div>
+                            <div class="image wait">
+                                <img src="img/loading.gif" alt="loading">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CATEGORIE POPUP -->
+                <div id="categorie-popup" class="popup" data-bind="with: scontriniVM">
+                    <div class="title">
+                        Seleziona categorie da inserire
+                    </div>
+                    <div class="body" data-bind="foreach: categorie">
+                        <div class="element">
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: selected"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="text" data-bind="text: nome"></div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="element">
+                            <div class="image annulla">
+                                <img src="img/annulla.png" alt="annulla">
+                            </div>
+                            <div class="image conferma">
+                                <img src="img/conferma.png" alt="conferma">
+                            </div>
+                            <div class="image wait">
+                                <img src="img/loading.gif" alt="loading">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCONTRINI POPUP -->
+                <div id="scontrini-popup" class="popup" data-bind="with: stampantiVM">
+                    <div class="title">
+                        Seleziona scontrini da stampare
+                    </div>
+                    <div class="body" data-bind="foreach: scontrini">
+                        <div class="element">
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: selected"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="text" data-bind="text: nome"></div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="element">
+                            <div class="image annulla">
+                                <img src="img/annulla.png" alt="annulla">
+                            </div>
+                            <div class="image conferma">
+                                <img src="img/conferma.png" alt="conferma">
+                            </div>
+                            <div class="image wait">
+                                <img src="img/loading.gif" alt="loading">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAYOUT SCONTRINI POPUP -->
+                <div id="layout-scontrino-popup" class="popup" data-bind="with: scontriniVM.modScontrino">
+                    <div class="title" data-bind="text: 'Layout '+nome()"></div>
+                    <div class="body">
+                        <div class="element">
+                            <div class="text">Immagine</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: immagine"/>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Intestazione</div>
+                            <div class="input">
+                                <input type="text" data-bind="value: intestazione"/>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Font grande</div>
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: dimensioneCheckbox"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Mostra prezzi</div>
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: prezziCheckbox"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Mostra totale</div>
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: totaleCheckbox"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Mostra tavolo</div>
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: tavoloCheckbox"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Mostra barcode</div>
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: barcodeCheckbox"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="text">Mostra data e ora</div>
+                            <div class="input">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" data-bind="checked: dataoraCheckbox"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="element">
+                            <div class="image annulla">
+                                <img src="img/annulla.png" alt="annulla">
+                            </div>
+                            <div class="image conferma">
+                                <img src="img/conferma.png" alt="conferma">
+                            </div>
+                            <div class="image wait">
+                                <img src="img/loading.gif" alt="loading">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./js/vendor/jquery.min.js"></script>
+        <script src="./js/vendor/sammy.min.js"></script>
+        <script src="./js/vendor/knockout-3.4.2.js"></script>
+        <script src="./js/vendor/DragDropTouch.js"></script>
+        <script src="./js/globals.js"></script>
+        <script src="./js/APIEntity.js"></script>
+        <script src="./js/APIEntities.js"></script>
+        <script src="./js/abstract_classes.js"></script>
+        <script src="./js/login.js"></script>
+        <script src="./js/serate.js"></script>
+        <script src="./js/categorie.js"></script>
+        <script src="./js/aggiunte.js"></script>
+        <script src="./js/casse.js"></script>
+        <script src="./js/stampanti.js"></script>
+        <script src="./js/scontrini.js"></script>
+        <script src="./js/listino.js"></script>
+        <script src="./js/page.js"></script>
+        <script src="./js/main.js"></script>
+        <script src="./js/popups.js"></script>
+        <script src="./js/dragndrop.js"></script>
+        <script src="./js/inputs.js"></script>
+    </body>
+</html>

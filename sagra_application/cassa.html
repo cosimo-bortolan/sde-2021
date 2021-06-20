@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cassa</title>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#B90028">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="js/manifest_cassa.json">
+  <link rel="shortcut icon" href="img/logo_cassa.png">
+  <link rel="stylesheet" href="css/style.css" type="text/css"/>
+  <link rel="stylesheet" href="css/navbar.css" type="text/css"/>
+  <link rel="stylesheet" href="css/popup.css" type="text/css"/>
+  <link rel="stylesheet" href="css/listino.css" type="text/css"/>
+  <link rel="stylesheet" href="css/serate.css" type="text/css"/>
+  <link rel="stylesheet" href="css/categorie.css" type="text/css"/>
+  <link rel="stylesheet" href="css/aggiunte.css" type="text/css"/>
+  <link rel="stylesheet" href="css/scontrini.css" type="text/css"/>
+  <link rel="stylesheet" href="css/cassa.css" type="text/css"/>
+</head>
+<body>
+  <div id="page">
+
+
+    <!-- NAVBAR -->
+    <div id="navbar">
+      <div class="title">
+        <div class="item">
+          <div class="image">
+            <img src="img/menu-button.png" alt="menu">
+          </div>
+          <div id="menu-name" class="text" data-bind="text: user().nome"></div>
+          <div id="page-name" class="text" data-bind="text: user().nome"></div>
+        </div>
+      </div>
+      <div class="body">
+      </div>
+      <div class="footer">
+        <div class="item" onclick="window.location.href = 'index.html'">
+          <div class="image">
+            <img src="img/applicazioni.png" alt="applicazioni">
+          </div>
+          <div class="text">Applicazioni</div>
+        </div>
+        <div class="item" data-bind="click: loginVM.click">
+          <div class="image">
+            <img src="img/utente.png" alt="utente">
+          </div>
+          <div class="text" data-bind="text: loginVM.buttonName()"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login" class="contents" data-bind="with: loginVM, visible: pageName() === 'Login' && !networkError() && !loading()">
+      <div class="title">Login</div>
+      <div class="body">
+        <div class="line">
+          <select data-bind="options: casse,
+          optionsText: 'nome',
+          optionsValue: 'id',
+          value: $root.loginVM.selectedCassa">
+        </select>
+      </div>
+      <div class="line">
+        <input type="password" placeholder="password" data-bind="textInput: password">
+      </div>
+      <div class="line">
+        <input type="button" value="Entra">
+      </div>
+    </div>
+  </div>
+
+  <!-- CASSA -->
+  <div id="cassa" class="contents" data-bind="with: cassaVM, visible: pageName() === 'Cassa' && !loading()">
+    <div class="body">
+      <div class="tab-navigation">
+        <div class="title selected">CUCINA</div>
+        <div class="title">BAR</div>
+        <div class="title">ORDINE</div>
+      </div>
+      <div class="tab-container">
+        <div class="tab selected">
+          <div class="collection">
+            <!-- ko foreach: categorie -->
+            <!-- ko if: gruppo()==0 -->
+            <div class="categoria-name" data-bind="text: nome, visible: pietanze().length"></div>
+            <!-- ko foreach: pietanze -->
+            <div class="element">
+              <div class="group">
+                <div class="text" data-bind="text: quantita_prenotazione"></div>
+                <div class="text" data-bind="text: nome"></div>
+              </div>
+              <div class="group">
+                <div class="image aggiunte" data-bind="visible: aggiunte().length">
+                  <img src="img/aggiunte_black.png" alt="aggiunte">
+                </div>
+                <div class="image elimina">
+                  <img src="img/annulla_red.png" alt="elimina">
+                </div>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- /ko -->
+          </div>
+        </div>
+        <div class="tab">
+          <div class="collection">
+            <!-- ko foreach: categorie -->
+            <!-- ko if: gruppo()==1 -->
+            <div class="categoria-name" data-bind="text: nome, visible: pietanze().length"></div>
+            <!-- ko foreach: pietanze -->
+            <div class="element">
+              <div class="group">
+                <div class="text" data-bind="text: quantita_prenotazione"></div>
+                <div class="text" data-bind="text: nome"></div>
+              </div>
+              <div class="group">
+                <div class="image aggiunte" data-bind="visible: aggiunte().length">
+                  <img src="img/aggiunte_black.png" alt="aggiunte">
+                </div>
+                <div class="image elimina">
+                  <img src="img/annulla_red.png" alt="elimina">
+                </div>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- /ko -->
+          </div>
+        </div>
+        <div class="tab">
+          <div class="collection">
+            <div class="row">
+              <div class="group">
+                <div class="text">Sconto</div>
+                <div class="input sconto">
+                  <input type="number" data-bind="textInput: scontoString"/>
+                </div>
+              </div>
+              <div class="group">
+                <div class="text">Omaggio</div>
+                <div class="input fixed checkbox omaggio">
+                  <label class="checkbox-label">
+                    <input type="checkbox" data-bind="checked: omaggioCheckbox"/>
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="totale">
+              <div class="text">TOTALE</div>
+              <div class="text" data-bind="text: totaleString"></div>
+            </div>
+            <div class="row">
+              <div class="group">
+                <div class="text">Contanti</div>
+                <div class="input">
+                  <input type="number" data-bind="textInput: contanti"/>
+                </div>
+              </div>
+              <div class="group">
+                <div class="text">Resto</div>
+                <div class="text" data-bind="text: resto"></div>
+              </div>
+            </div>
+            <div class="button-container">
+              <div class="reset button">RESET</div>
+              <div class="pagamenti button">PAGAMENTI</div>
+              <div class="ordina button" data-bind="css: {disable: (ordine().length === 0 || (tavolo() === 0 || coperti() === undefined) && (asporto() === '0' || nome() === ''))}">ORDINA</div>
+            </div>
+            <!-- ko foreach: ordine -->
+            <div class="element">
+              <div class="group">
+                <div class="text" data-bind="text: quantita_prenotazione"></div>
+                <div class="text" data-bind="text: nome"></div>
+              </div>
+              <div class="group">
+                <div class="image aggiunte" data-bind="visible: aggiunte().length">
+                  <img src="img/aggiunte_black.png" alt="aggiunte">
+                </div>
+                <div class="image elimina">
+                  <img src="img/annulla_red.png" alt="elimina">
+                </div>
+              </div>
+            </div>
+            <!-- /ko -->
+          </div>
+        </div>
+        <div class="tab">
+          <div class="collection">
+            <div class="totale">
+              <div class="text" data-bind="text: 'ORDINE n.'+ordineConfermato()+' confermato'"></div>
+            </div>
+            <div class="button-container">
+              <div class="nuovo-ordine button">NUOVO ORDINE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="tavolo">
+        <div class="image">
+          <img src="img/table.png" alt="tavolo">
+        </div>
+        <div class="text" data-bind="text: tavolo() === 0 ? asporto() === '1' ? 'AS' : '' : tavolo()"></div>
+      </div>
+      <div class="coperti" data-bind="style: { display: asporto() === '0' ? 'flex' : 'none' }">
+        <div class="image">
+          <img src="img/group.png" alt="coperti">
+        </div>
+        <div class="text" data-bind="text: coperti() === undefined ? '' : coperti()"></div>
+      </div>
+      <div class="nome" data-bind="style: { display: asporto() === '1' ? 'flex' : 'none' }">
+        <div class="image">
+          <img src="img/man.png" alt="nome">
+        </div>
+        <div class="input">
+          <input type="text" data-bind="textInput: nome"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading" class="contents" data-bind="visible: loading() && !networkError()">
+    <div class="title"></div>
+    <div class="body">
+      <div class="image">
+        <img src="img/loading_cassa.gif" alt="caricamento">
+      </div>
+    </div>
+  </div>
+
+  <!-- NETWORK ERROR -->
+  <div id="network" class="contents" data-bind="visible: networkError">
+    <div class="title"></div>
+    <div class="body">
+      <div class="image">
+        <img src="img/round-error_cassa.png" alt="errore">
+      </div>
+      Errore di rete
+    </div>
+  </div>
+
+  <div class="popup-container">
+
+    <!-- ALERT POPUP -->
+    <div id="alert-popup" class="popup">
+      <div class="title">
+        Errore!
+      </div>
+      <div class="body">
+        <div class="line" data-bind="visible: popupAlert, text: popupAlert"></div>
+        <div class="line" data-bind="visible: popupDetails, html: popupDetails"></div>
+        <div class="line" data-bind="visible: popupConfirm">
+          <input type="text" data-bind="textInput: popupInput"/>
+        </div>
+        <div class="line" data-bind="text: popupError"></div>
+      </div>
+      <div class="footer">
+        <div class="element">
+          <div class="image annulla">
+            <img src="img/annulla.png" alt="annulla">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGGIUNTE POPUP -->
+    <div id="aggiunte-popup" class="popup" data-bind="with: cassaVM.pietanzaAggiunte">
+      <div class="title">
+        Seleziona aggiunte diponibili
+      </div>
+      <div class="body" data-bind="foreach: prenotazioni">
+        <div class="element-container">
+          <div class="title">
+            <div class="text" data-bind="text: $parent.nome"></div>
+            <div class="image elimina">
+              <img src="img/annulla_red.png" alt="elimina">
+            </div>
+          </div>
+          <div class="content" data-bind="foreach: aggiunte_disponibili">
+            <div class="element">
+              <div class="input">
+                <label class="checkbox-label">
+                  <input type="checkbox" data-bind="checked: selected"/>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="text" data-bind="text: nome()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="element">
+          <div class="image annulla">
+            <img src="img/annulla.png" alt="annulla">
+          </div>
+          <div class="image conferma">
+            <img src="img/conferma.png" alt="conferma">
+          </div>
+          <div class="image wait">
+            <img src="img/loading.gif" alt="loading">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAVOLO POPUP -->
+    <div id="tavolo-popup" class="popup">
+      <div class="title">
+        Seleziona tavolo
+      </div>
+      <div class="body">
+        <div class="group">
+          <div class="text tavolo-number">ASPORTO</div></div>
+          <div class="group">
+            <div class="group">
+              <div class="text tavolo-number">1</div>
+              <div class="text tavolo-number">2</div>
+              <div class="text tavolo-number">3</div>
+              <div class="text tavolo-number">4</div>
+              <div class="text tavolo-number">5</div>
+            </div>
+            <div class="group">
+              <div class="text tavolo-number">6</div>
+              <div class="text tavolo-number">7</div>
+              <div class="text tavolo-number">8</div>
+              <div class="text tavolo-number">9</div>
+              <div class="text tavolo-number">10</div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group">
+              <div class="text tavolo-number">11</div>
+              <div class="text tavolo-number">12</div>
+              <div class="text tavolo-number">13</div>
+              <div class="text tavolo-number">14</div>
+              <div class="text tavolo-number">15</div>
+            </div>
+            <div class="group">
+              <div class="text tavolo-number">16</div>
+              <div class="text tavolo-number">17</div>
+              <div class="text tavolo-number">18</div>
+              <div class="text tavolo-number">19</div>
+              <div class="text tavolo-number">20</div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group">
+              <div class="text tavolo-number">21</div>
+              <div class="text tavolo-number">22</div>
+              <div class="text tavolo-number">23</div>
+              <div class="text tavolo-number">24</div>
+              <div class="text tavolo-number">25</div>
+            </div>
+            <div class="group">
+              <div class="text tavolo-number">26</div>
+              <div class="text tavolo-number">27</div>
+              <div class="text tavolo-number">28</div>
+              <div class="text tavolo-number">29</div>
+              <div class="text tavolo-number">30</div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group">
+              <div class="text tavolo-number">31</div>
+              <div class="text tavolo-number">32</div>
+              <div class="text tavolo-number">33</div>
+              <div class="text tavolo-number">34</div>
+              <div class="text tavolo-number">35</div>
+            </div>
+            <div class="group">
+              <div class="text tavolo-number">36</div>
+              <div class="text tavolo-number">37</div>
+              <div class="text tavolo-number">38</div>
+              <div class="text tavolo-number">39</div>
+              <div class="text tavolo-number">40</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="element">
+            <div class="image annulla">
+              <img src="img/annulla.png" alt="annulla">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COPERTI POPUP -->
+      <div id="coperti-popup" class="popup">
+        <div class="title">
+          Seleziona coperti
+        </div>
+        <div class="body">
+          <div class="group"><div class="text coperti-number">NESSUNO</div></div>
+          <div class="group">
+            <div class="group">
+              <div class="text coperti-number">1</div>
+              <div class="text coperti-number">2</div>
+              <div class="text coperti-number">3</div>
+              <div class="text coperti-number">4</div>
+              <div class="text coperti-number">5</div>
+            </div>
+            <div class="group">
+              <div class="text coperti-number">6</div>
+              <div class="text coperti-number">7</div>
+              <div class="text coperti-number">8</div>
+              <div class="text coperti-number">9</div>
+              <div class="text coperti-number">10</div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group">
+              <div class="text coperti-number">11</div>
+              <div class="text coperti-number">12</div>
+              <div class="text coperti-number">13</div>
+              <div class="text coperti-number">14</div>
+              <div class="text coperti-number">15</div>
+            </div>
+            <div class="group">
+              <div class="text coperti-number">16</div>
+              <div class="text coperti-number">17</div>
+              <div class="text coperti-number">18</div>
+              <div class="text coperti-number">19</div>
+              <div class="text coperti-number">20</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="element">
+            <div class="image annulla">
+              <img src="img/annulla.png" alt="annulla">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESET POPUP -->
+      <div id="reset-popup" class="popup">
+        <div class="title">
+          Confermi reset?
+        </div>
+        <div class="body">
+          <div class="line">ATTENZIONE! Il reset eliminerà tutte le pietanze dall'ordine.</div>
+        </div>
+        <div class="footer">
+          <div class="element">
+            <div class="image annulla">
+              <img src="img/annulla.png" alt="annulla">
+            </div>
+            <div class="image conferma">
+              <img src="img/conferma.png" alt="conferma">
+            </div>
+            <div class="image wait">
+              <img src="img/loading.gif" alt="loading">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGAMENTI POPUP -->
+      <div id="pagamenti-popup" class="popup" data-bind="with: cassaVM">
+        <div class="title">
+          Seleziona pagamento
+        </div>
+        <div id="loading" class="contents" data-bind="visible: loadingPagamenti()">
+          <div class="title"></div>
+          <div class="body">
+            <div class="image">
+              <img src="img/loading_cassa.gif" alt="caricamento">
+            </div>
+          </div>
+        </div>
+        <div class="body" data-bind="foreach: pagamenti, visible: !loadingPagamenti()">
+          <div class="element" data-bind="css: {disable: importo() != $parent.totale()}">
+            <div class="input">
+              <label class="checkbox-label">
+                <input type="checkbox" data-bind="checked: selectedCheckbox"/>
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="text" data-bind="text: mittente()"></div>
+            <div class="text" data-bind="text: importo()+' €'"></div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="element">
+            <div class="image annulla">
+              <img src="img/annulla.png" alt="annulla">
+            </div>
+            <div class="image conferma">
+              <img src="img/conferma.png" alt="conferma">
+            </div>
+            <div class="image wait">
+              <img src="img/loading.gif" alt="loading">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./js/vendor/jquery.min.js"></script>
+  <script src="./js/vendor/sammy.min.js"></script>
+  <script src="./js/vendor/knockout-3.4.2.js"></script>
+  <script src="./js/vendor/DragDropTouch.js"></script>
+  <script src="./js/globals.js"></script>
+  <script src="./js/APIEntity.js"></script>
+  <script src="./js/APIEntities.js"></script>
+  <script src="./js/abstract_classes.js"></script>
+  <script src="./js/login.js"></script>
+  <script src="./js/cassa.js"></script>
+  <script src="./js/page_cassa.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/popups.js"></script>
+  <script src="./js/dragndrop.js"></script>
+  <script src="./js/inputs.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+    "background_color": "#FFFFFF",
+    "theme_color": "#0089B5",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "../img/logo_gestione.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }],
+    "name": "Gestione",
+    "short_name": "Gestione",
+    "start_url": "/sagra_application/gestione.html"
+}

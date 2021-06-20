@@ -1,0 +1,7 @@
+
+
+.contents>.body .element:nth-child(1){
+    font-weight: 500;
+    background-color: #dbdbdb;
+    border-bottom: none;
+}

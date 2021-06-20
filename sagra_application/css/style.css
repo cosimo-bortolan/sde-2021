@@ -1,0 +1,465 @@
+/*----------------------------
+*   Page
+----------------------------*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Regular.ttf');
+    font-weight:  400;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Medium.ttf');
+    font-weight:  500;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Bold.ttf');
+    font-weight:  700;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Black.ttf');
+    font-weight:  900;
+}
+
+html{
+    height: 100%;
+    font-size: 18px;
+}
+
+body{
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto';
+}
+
+div{
+    display: flex;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    -webkit-user-drag: none;
+}
+
+.expand>img{
+    transition: transform 0.4s;
+}
+
+*{
+    box-sizing: border-box;
+    -webkit-user-select: none;
+}
+
+#page{
+    display: none;
+    height: 100%;
+}
+
+.image{
+    width: 2rem;
+    height: 2rem;
+    padding: 0.3rem;
+}
+
+/*----------------------------
+*   Contents
+----------------------------*/
+.contents{
+    flex-grow: 1;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.contents>.title{
+    font-size: 1.17rem;
+    line-height: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 1.3rem;
+    padding: 0.8rem 1rem 0 1rem;
+}
+
+.contents>.body{
+    display: block;
+    flex-grow: 1;
+    padding: 0rem 0.8rem 1rem 0.8rem;
+    overflow-y: auto;
+}
+
+.contents>.footer{
+    background: #80c7de;
+    flex-direction: column;
+    padding: 0rem 1rem 0.5rem 1rem;
+}
+
+.collection{
+    flex-grow: 1;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+}
+
+.element{
+    min-height: 2rem;
+    max-height: 2rem;
+    border-bottom: 1px solid #C4C4C4;
+    align-items: center;
+    transition: background 1s;
+}
+
+.element.dragged{
+    background: #b9e2ef;
+    transition:background 0s;
+}
+
+.element>.group:nth-child(1){
+    flex: 1;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+    padding-left: 0.5rem;
+}
+
+.element>.group:nth-child(1)>div:not(.image){
+    padding-right: 0.5rem;
+}
+
+.element>.group:nth-child(1)>.text{
+    display: block;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.element>.group:nth-child(1) input{
+    text-align: left;
+}
+
+.element>.group:nth-child(2)>.group:nth-child(1){
+    flex: 1;
+}
+
+.element>.group:nth-child(2)>.group:nth-child(2){
+    flex: 0 3rem;
+    justify-content: space-evenly;
+}
+
+.element>.group:nth-child(2)>.group:nth-child(1)>.group{
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer .element{
+    border-bottom: none;
+}
+
+.no-click .element:not(.dragged) *{
+    pointer-events: none;
+}
+
+.no-click .element>.group:nth-child(2) *{
+    pointer-events: none;
+}
+
+.no-click .popup-container{
+    pointer-events: none;
+}
+
+.element>.group:nth-child(1)>.image:nth-child(1){
+    cursor: grab;
+}
+
+.contents .element .input{
+    align-items: center;
+    flex: 1;
+    display: none;
+}
+
+.footer .element .input {
+    display: flex;
+}
+
+.categoria-name{
+    padding: 0.8rem 0.5rem 0.2rem 0.3rem;
+    font-weight: 500;
+}
+
+.mobile-only{
+    display: none !important;
+}
+
+select, input{
+    background-color: white;
+    height: 1.6rem;
+    width: 100%;
+    border: solid #C4C4C4 1px;
+    font-family: 'Roboto';
+    font-size: 1rem;
+    text-align: center;
+    margin: 0px;
+}
+
+select{
+    text-align-last: center;
+}
+
+input::-webkit-calendar-picker-indicator{
+    height: 0.5rem;
+    width: 0.5rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+input::-webkit-clear-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input.errore::placeholder{
+    font-size: 0.9rem;
+    color: red;
+    opacity: 60%;
+}
+
+input:focus, select:focus{
+    outline: none;
+}
+
+.checkbox{
+    display: flex !important;
+}
+
+.checkbox-label {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: 0 auto;
+}
+/* Hide the browser's default checkbox */
+.checkbox-label input {
+    display: none;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-label:hover input ~ .checkmark {
+    background-color: #dbdbdb;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-label input:checked ~ .checkmark {
+    background-color: #0089B5;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-label .checkmark:after {
+    position: relative;
+    left: 9px;
+    top: 2px;
+    width: 7px;
+    height: 16px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.wait{
+    display: none;
+}
+
+.bold-500{
+    font-weight: 500;
+}
+
+.rotate{
+    transform: rotateX(180deg);
+}
+
+.disable{
+    opacity: 0.3;
+}
+
+/*----------------------------
+*   #login, #loading, #network
+----------------------------*/
+
+#login.contents>.body, #loading.contents>.body, #network.contents>.body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#login .line{
+    width: 11rem;
+    padding-top: 0.5rem;
+}
+
+#login input[type=button]{
+    border: none;
+    background-color: #0089B5;
+    color: white;
+}
+
+#loading .image, #network .image{
+    width: 4rem;
+    height: 4rem;
+    padding: 0.3rem;
+}
+
+/*----------------------------
+*   #index-menu
+----------------------------*/
+
+#index-menu{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#index-menu>.box{
+    width: 11rem;
+    height: 11rem;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    margin: 0.4rem;
+}
+#index-menu>.box:nth-child(1){
+    background-color: #B90028;
+}
+
+#index-menu>.box:nth-child(2){
+    background-color: #0089B5;
+}
+
+@media (max-width: 900px) {
+    #page{
+        flex-direction: column;
+    }
+
+    .contents>.title{
+        display: none;
+    }
+
+    .contents>.footer{
+        padding: 0.4rem 1rem;
+    }
+
+    .open-mobile .contents{
+        display: none;
+    }
+
+    .desktop-only{
+        display: none;
+    }
+
+    .mobile-only{
+        display: flex !important;
+    }
+
+    .contents>.body{
+        padding-top: 1rem;
+    }
+
+    .contents .element{
+        flex-direction: column;
+        overflow-y: hidden;
+        padding: 0 0 0 0.5rem;
+    }
+
+    .element.open{
+        max-height: fit-content;
+    }
+
+    .element>.group:nth-child(1){
+        overflow: visible;
+        padding-left: 0;
+    }
+
+    .element>.group:nth-child(2){
+        width: 100%;
+        flex: 0;
+        padding: 0.5rem 0rem;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(1){
+        flex-direction: column;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(2){
+        flex: 0;
+        flex-direction: column;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(1)>.group{
+        flex: 0;
+        min-height: 1.8rem;
+        max-height: 1.8rem;
+        padding-right: 0.5rem;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(1)>.group>.title{
+        max-width: 5.8rem;
+        padding-right: 0.5rem;
+        font-weight: 500;
+        flex: 1;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(1)>.group>div:not(.title){
+        max-width: 10rem;
+        flex: 1;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(1)>.group>.text{
+        justify-content: center;
+    }
+
+    .element>.group:nth-child(2)>.group:nth-child(1)>.group>.image-container{
+        justify-content: center;
+    }
+
+    .footer .element>.group:nth-child(1)>.text{
+        font-weight: 500;
+    }
+
+    .footer .element.open .text {
+        display: none !important;
+    }
+
+    .footer .element .input {
+        display: none;
+    }
+
+    .footer .element.open .input {
+        display: flex;
+    }
+}
