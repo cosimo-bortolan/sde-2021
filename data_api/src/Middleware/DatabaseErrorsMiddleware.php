@@ -20,7 +20,6 @@ class DatabaseErrorsMiddleware {
     try{
       $response = $handler->handle($request);
     } catch (\PDOException $e) {
-        print_log($e);
         switch ($e->errorInfo[1]) {
             case 1062:
                 $msg_substr = substr($e->errorInfo[2], strpos($e->errorInfo[2], "for key '") + 9);

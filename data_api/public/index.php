@@ -65,10 +65,6 @@ $app->group('/casse', function (RouteCollectorProxy $app) use ($db){
     $app->group('/prenotazioni', function (RouteCollectorProxy $app) {
       $app->delete('', PrenotazioniController::class . ':deleteByCassa');
     })->add(new ResourceMiddleware($db, 2));
-    $app->group('/ordini', function (RouteCollectorProxy $app) {
-      $app->get('', OrdiniController::class . ':getByCassa');
-      $app->delete('', OrdiniController::class . ':deleteByCassa');
-    })->add(new ResourceMiddleware($db, 2));
   })->add(new IdMiddleware());
 })->add(new ResourceMiddleware($db, 1));
 
@@ -85,7 +81,6 @@ $app->group('/categorie', function (RouteCollectorProxy $app){
 $app->group('/ordini', function (RouteCollectorProxy $app) use ($db){
   $app->get('', Controller::class . ':getAll');
   $app->post('', Controller::class . ':insert');
-  $app->delete('', Controller::class . ':deleteAll');
   $app->group('/{id}', function (RouteCollectorProxy $app) use ($db){
     $app->get('', Controller::class . ':get');
     $app->delete('', Controller::class . ':delete');
@@ -100,16 +95,13 @@ $app->group('/pietanze', function (RouteCollectorProxy $app) use ($db){
     $app->patch('', Controller::class . ':update');
     $app->delete('', Controller::class . ':delete');
     $app->group('/prenotazioni', function (RouteCollectorProxy $app) {
-      $app->get('', PrenotazioniController::class . ':getByPietanza');
       $app->post('', PrenotazioniController::class . ':insert');
-      $app->delete('', PrenotazioniController::class . ':deleteByPietanza');
     })->add(new ResourceMiddleware($db, 2));
   })->add(new IdMiddleware());
 })->add(new ResourceMiddleware($db, 1));
 
 $app->group('/prenotazioni', function (RouteCollectorProxy $app) use ($db){
   $app->get('', Controller::class . ':getAll');
-  $app->delete('', Controller::class . ':deleteAll');
   $app->group('/{id}', function (RouteCollectorProxy $app) use ($db){
     $app->get('', Controller::class . ':get');
     $app->patch('', Controller::class . ':update');

@@ -2,7 +2,7 @@
 
 use Sagra\Data\DAO\DAO;
 use Sagra\Data\DAO\ScontrinoDAO;
-use Sagra\Entities\Scontrino;
+use Sagra\Entities\Stampante;
 use Sagra\Exceptions\InputException;
 
 class StampanteDAO extends DAO {

@@ -58,7 +58,6 @@ class InputException extends MyException {
       break;
       case PAYMENT_KO:
       $this->setBody(ERR_PAYMENT_KO, "The order has been inserted correctly but the payment has not been accepted. See details for more informations.", $this->details);
-      $this->httpErrorCode = 500;
       break;
       default: throw new InternalException($this);
     }

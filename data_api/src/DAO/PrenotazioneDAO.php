@@ -176,6 +176,8 @@ class PrenotazioneDAO extends DAO {
   }
 
   function update($prenotazione, $data) {
+    unset($data->cassa);
+    unset($data->pietanza);
     $prenotazione->patch($data);
 
     $this->db->begin_transaction();

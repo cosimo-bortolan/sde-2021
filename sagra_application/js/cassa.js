@@ -276,8 +276,7 @@ class CassaViewModel {
           self.sconto(0);
           self.pagamento = null;
           switch(response.error){
-            case 19: alert("Ordine confermato ma non stampato"); break;
-            case 20: alert("Ordine confermato ma non pagato"); break;
+            case 19: alert("Ordine confermato ma non stampato.\r\nScontrini stampati: " + response.details.printed + "\r\nScontrini non stampati: " + response.details.not_printed); break;
           }
           resolve()
         });

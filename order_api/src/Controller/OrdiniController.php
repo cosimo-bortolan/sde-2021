@@ -28,8 +28,6 @@ class OrdiniController {
     $data->cassa = $cassa->id;
     $data->serata = $serata->id;
     try{
-      $ordine_response = $this->data_client->post('/ordini', ['body' => json_encode($data)]);
-      $ordine = json_decode($ordine_response->getBody())->ordine;
       if(!is_null($data->pagamento)){
         try{
           $pagamento_response = $this->payment_client->patch('/satispay/payments/'.$data->pagamento->id, ['body' => json_encode(['action' => 'ACCEPT'])]);
@@ -39,6 +37,8 @@ class OrdiniController {
           ]);
         }
       }
+      $ordine_response = $this->data_client->post('/ordini', ['body' => json_encode($data)]);
+      $ordine = json_decode($ordine_response->getBody())->ordine;
       $this->printOrder($ordine, $cassa);
       $response = $ordine_response;
     }catch(ClientException $e) {
@@ -52,7 +52,7 @@ class OrdiniController {
   private function printOrder($ordine, $cassa){
     $categorie = $this->getCategorie($ordine);
     if ($cassa->stampante != null) {
-      print_log("Stampante " . $cassa->stampante . " stampa ricevuta");
+      //print on cassa->stampante
     }
     $stampanti_response = $this->data_client->get('/stampanti');
     $stampanti = json_decode($stampanti_response->getBody())->stampanti;

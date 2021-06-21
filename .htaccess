@@ -2,7 +2,14 @@
 RewriteEngine On
 RewriteBase /
 
-# # riscrivi url api
+## blocca l'accesso alle cartelle dall'esterno
+## (non blocca le richieste per le api che verranno riscritte)
+RewriteCond %{THE_REQUEST} !^GET\ /order_api [NC]
+RewriteCond %{THE_REQUEST} !^GET\ /core_api [NC]
+RewriteCond %{THE_REQUEST} !^GET\ /auth_api [NC]
+RewriteRule .* - [F,L]
+
+## riscrivi url api
 RewriteRule order_api/.* order_api/public/index.php [L]
 RewriteRule core_api/.* core_api/public/index.php [L]
 RewriteRule auth_api/.* auth_api/public/index.php [L]

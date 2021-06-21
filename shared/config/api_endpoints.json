@@ -1,8 +1,8 @@
 {
   "data_api": "http://localhost:8891/",
   "auth_api": "http://localhost/auth_api/",
-  "core_api": "http://localhost:8892/",
+  "core_api": "http://localhost/core_api/",
   "payment_api": "http://localhost:8889/",
   "printer_api": "http://localhost:8890/",
-  "order_api": "http://localhost:8894/"
+  "order_api": "http://localhost/order_api/"
 }

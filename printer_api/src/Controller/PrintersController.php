@@ -42,13 +42,10 @@ class PrintersController {
     }catch(\Exception $e){
       $status = 500;
     }
-    return $response
-    ->withHeader('Content-Type', 'application/json')
-    ->withStatus($status);
+    return $response->withStatus($status);
   }
 
   private function stampa($stampante, $scontrino, $ordine) {
-    print_log("ciao".$stampante);
     $connector = new NetworkPrintConnector($stampante, 9100, 5);
     $printer = new Printer($connector);
 

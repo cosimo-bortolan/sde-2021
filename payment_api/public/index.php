@@ -35,8 +35,9 @@ $app->group('/satispay', function (RouteCollectorProxy $app) {
         $payment_list[] = [
           'id' => $payment->id,
           'type' => $payment->type,
+          'status' => $payment->status,
           'amount' => number_format($payment->amount_unit/100, 2, ',', '.'),
-          'sender' => $payment->sender->name,
+          'sender' => $payment->sender->name
         ];
       }
       $response->getBody()->write(json_encode(['payments' => $payment_list]));
@@ -47,9 +48,16 @@ $app->group('/satispay', function (RouteCollectorProxy $app) {
         $id = $args['id'];
         $data = jsonDecode($request->getBody());
         try{
-          $payment = \SatispayGBusiness\Payment::update($id, [
+          $payment_response = \SatispayGBusiness\Payment::update($id, [
             "action" => $data->action
           ]);
+          $payment = [
+            'id' => $payment_response->id,
+            'type' => $payment_response->type,
+            'status' => $payment_response->status,
+            'amount' => number_format($payment_response->amount_unit/100, 2, ',', '.'),
+            'sender' => $payment_response->sender->name
+          ];
           $response->getBody()->write(json_encode(['payment' => $payment]));
         }catch(Exception $e){
           $response = $response->withStatus(503);

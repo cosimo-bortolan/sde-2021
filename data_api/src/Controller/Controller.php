@@ -34,9 +34,9 @@ class Controller {
   }
 
   public function delete(Request $request, Response $response, $args){
-    $id = $request->getAttribute('id');
-    $result = $request->getAttribute('DAO')->delete($id);
-    $response->getBody()->write(json_encode([$request->getAttribute('name') => $result]));
+    $resource = $request->getAttribute('resource');
+    $result = $request->getAttribute('DAO')->delete($resource);
+    $response = $response->withStatus(204);
     return $response;
   }
 
